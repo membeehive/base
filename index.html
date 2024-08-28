@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webpage with Slider</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Light gray background */
+        }
+
+        .banner {
+            background-color: #4CAF50; /* Green color */
+            color: #f0f0f0; /* Light gray text color */
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds shadow under the banner */
+        }
+
+        .footer {
+            background-color: #333; /* Dark gray color */
+            color: yellow; /* Yellow text color */
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .slider-container {
+            overflow: hidden; /* Hides the overflowing divs */
+            width: 80%;
+            margin: 20px auto; /* Adds top and bottom margin */
+            padding: 20px 0;
+            position: relative; /* For positioning elements inside */
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .rounded-div {
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            padding: 20px;
+            text-align: center;
+            background-color: #c4c4c4; /* Medium gray background */
+            width: 200px; /* Fixed width for slider items */
+            flex-shrink: 0; /* Prevents shrinking of flex items */
+        }
+
+        .rounded-div img {
+            border-radius: 10px;
+            width: 100%;
+            height: auto;
+        }
+
+        .title {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333; /* Dark gray text color */
+        }
+
+        .description {
+            margin-top: 10px;
+            color: #333; /* Dark gray text color */
+        }
+
+        .demo-button {
+            display: block;
+            margin: 10px auto; /* Center the button horizontally */
+            padding: 10px 20px;
+            background-color: #888; /* Gray button background */
+            color: white; /* Button text color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .demo-button:hover {
+            background-color: #555; /* Darker gray on hover */
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #4CAF50; /* Green color */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 10; /* Ensure arrows are above other content */
+        }
+
+        .arrow:hover {
+            background-color: #388E3C; /* Darker green on hover */
+        }
+
+        .arrow-left {
+            left: 10%; /* Position to the left of the slider container */
+        }
+
+        .arrow-right {
+            right: 10%; /* Position to the right of the slider container */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="banner">
+        <h1>Welcome to My Webpage</h1>
+    </div>
+
+    <!-- Left arrow button -->
+    <button class="arrow arrow-left" onclick="slideLeft()">&#9664;</button>
+
+    <div class="slider-container">
+        <div class="slider">
+            <!-- Eight divs for the slider -->
+            <div class="rounded-div">
+                <img src="https://via.placeholder.com/150" alt="Image 1">
+                <div class="title">Title for Image 1</div>
+                <div class="description">Description for Image 1</div>
+                <button class="demo-button">Demo</button>
+            </div>
+            <div class="rounded-div">
+                <img src="https://via.placeholder.com/150" alt="Image 2">
+                <div class="title">Title for Image 2</div>
+                <div class="description">Description for Image 2</div>
+                <button class="demo-button">Demo</button>
+            </div>
+            <div class="rounded-div">
+                <img src="https://via.placeholder.com/150" alt="Image 3">
+                <div class="title">Title for Image 3</div>
+                <div class="description">Description for Image 3</div>
+                <button class="demo-button">Demo</button>
+            </div>
+            <div class="rounded-div">
+                <img src="https://via.placeholder.com/150" alt="Image 4">
+                <div class="title">Title for Image 4</div>
+                <div class="description">Description for Image 4</div>
+                <button class="demo-button">Demo</button>
+            </div>
+            <div class="rounded-div">
+                <img src="https://via.placeholder.com/150" alt="Image 5">
+                <div class="title">Title for Image 5</div>
+                <div class="description">Description for Image 5</div>
+                <button class="demo-button">Demo</button>
+            </div>
+            <div class="rounded-div">
+                <img src="https://via.placeholder.com/150" alt="Image 6">
+                <div class="title">Title for Image 6</div>
+                <div class="description">Description for Image 6</div>
+                <button class="demo-button">Demo</button>
+            </div>
+            <div class="rounded-div">
+                <img src="https://via.placeholder.com/150" alt="Image 7">
+                <div class="title">Title for Image 7</div>
+                <div class="description">Description for Image 7</div>
+                <button class="demo-button">Demo</button>
+            </div>
+            <div class="rounded-div">
+                <img src="https://via.placeholder.com/150" alt="Image 8">
+                <div class="title">Title for Image 8</div>
+                <div class="description">Description for Image 8</div>
+                <button class="demo-button">Demo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right arrow button -->
+    <button class="arrow arrow-right" onclick="slideRight()">&#9654;</button>
+
+    <div class="footer">
+        <p>&copy; 2024 My Webpage. All rights reserved.</p>
+    </div>
+
+    <script>
+        const slider = document.querySelector('.slider');
+        let currentIndex = 0;
+        const itemsToShow = 4;
+        const totalItems = 8;
+
+        function slideLeft() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSliderPosition();
+            }
+        }
+
+        function slideRight() {
+            if (currentIndex < totalItems - itemsToShow) {
+                currentIndex++;
+                updateSliderPosition();
+            }
+        }
+
+        function updateSliderPosition() {
+            slider.style.transform = 'translateX(' + (-currentIndex * 240) + 'px)';
+        }
+    </script>
+
+</body>
+</html>
